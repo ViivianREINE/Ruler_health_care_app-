@@ -1,0 +1,1075 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rural Emergency Assist - Lifesaving App for Rural India</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2E86AB;
+            --secondary: #A23B72;
+            --accent: #F18F01;
+            --light: #F7F9FC;
+            --dark: #2B2D42;
+            --success: #4CAF50;
+            --warning: #FF9800;
+            --danger: #F44336;
+            --text: #333333;
+            --shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+            background-color: var(--light);
+            color: var(--text);
+            line-height: 1.6;
+        }
+
+        /* Header & Navigation */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 1rem 2rem;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: var(--shadow);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .logo i {
+            font-size: 1.8rem;
+        }
+
+        nav ul {
+            display: flex;
+            list-style: none;
+            gap: 1.5rem;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.5rem 0.8rem;
+            border-radius: var(--radius);
+            transition: all 0.3s ease;
+        }
+
+        nav a:hover, nav a.active {
+            background-color: rgba(255, 255, 255, 0.2);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Main Content */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .page {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            color: white;
+            padding: 3rem 2rem;
+            border-radius: var(--radius);
+            text-align: center;
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .hero h1 {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            max-width: 800px;
+            margin: 0 auto 2rem;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background-color: var(--accent);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+        }
+
+        .cta-button:hover {
+            background-color: #e07d00;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Section Styling */
+        .section {
+            background-color: white;
+            padding: 2rem;
+            border-radius: var(--radius);
+            margin-bottom: 2rem;
+            box-shadow: var(--shadow);
+        }
+
+        .section h2 {
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--light);
+        }
+
+        .section h3 {
+            color: var(--secondary);
+            margin: 1.5rem 0 0.8rem;
+        }
+
+        /* Feature Cards */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .feature-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+            border-top: 4px solid var(--primary);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .feature-card i {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+        }
+
+        .feature-card h3 {
+            margin-bottom: 0.8rem;
+        }
+
+        /* How It Works */
+        .steps {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .step {
+            display: flex;
+            gap: 1rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background-color: var(--primary);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        /* Community Board */
+        .help-requests {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .request-card {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 1.5rem;
+            box-shadow: var(--shadow);
+            border-left: 4px solid var(--accent);
+        }
+
+        .request-type {
+            display: inline-block;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .blood { background-color: #FFEBEE; color: var(--danger); }
+        .medicine { background-color: #E8F5E9; color: var(--success); }
+        .fire { background-color: #FFF3E0; color: var(--warning); }
+
+        /* AI Symptom Checker Demo */
+        .symptom-checker {
+            background-color: white;
+            border-radius: var(--radius);
+            padding: 2rem;
+            box-shadow: var(--shadow);
+            margin-top: 1.5rem;
+        }
+
+        .chat-container {
+            height: 300px;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+            padding: 1rem;
+            overflow-y: auto;
+            margin-bottom: 1rem;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 1rem;
+            padding: 0.8rem;
+            border-radius: var(--radius);
+            max-width: 80%;
+        }
+
+        .user-message {
+            background-color: var(--primary);
+            color: white;
+            margin-left: auto;
+        }
+
+        .bot-message {
+            background-color: #e9ecef;
+            color: var(--text);
+        }
+
+        .input-group {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .input-group input {
+            flex: 1;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+        }
+
+        .input-group button {
+            background-color: var(--primary);
+            color: white;
+            border: none;
+            border-radius: var(--radius);
+            padding: 0.8rem 1.2rem;
+            cursor: pointer;
+        }
+
+        /* Maps & Hospitals */
+        .map-container {
+            height: 300px;
+            background-color: #e9ecef;
+            border-radius: var(--radius);
+            margin: 1.5rem 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text);
+            font-weight: bold;
+        }
+
+        .hospital-list {
+            margin-top: 1.5rem;
+        }
+
+        .hospital-item {
+            padding: 1rem;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .hospital-item:last-child {
+            border-bottom: none;
+        }
+
+        .distance {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Contact Form */
+        .contact-form {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 1rem;
+        }
+
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: var(--radius);
+        }
+
+        .form-group textarea {
+            height: 120px;
+        }
+
+        .download-buttons {
+            display: flex;
+            gap: 1rem;
+            margin-top: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .download-btn {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            background-color: var(--dark);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: var(--radius);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .download-btn:hover {
+            background-color: #1a1b2e;
+        }
+
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h3 {
+            margin-bottom: 1.5rem;
+            color: var(--accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-links a {
+            color: #ddd;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: var(--accent);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .social-links a {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: var(--accent);
+        }
+
+        .copyright {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Language Toggle */
+        .language-toggle {
+            display: flex;
+            gap: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .lang-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.3s ease;
+        }
+
+        .lang-btn.active {
+            background-color: white;
+            color: var(--primary);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                flex-direction: column;
+                gap: 0.5rem;
+                width: 100%;
+                text-align: center;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+                position: absolute;
+                right: 2rem;
+                top: 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .contact-form {
+                grid-template-columns: 1fr;
+            }
+
+            .download-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <body>
+        <header>
+            <nav>
+                <a href="index.html">Home</a> |
+                <a href="about.html">About</a> |
+                <a href="contact.html">Contact</a>
+            </nav>
+        </header>
+        <!-- ...existing code... -->
+    <!-- Header & Navigation -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <i class="fas fa-hand-holding-medical"></i>
+                <span>Rural Emergency Assist</span>
+            </div>
+            
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link active" data-page="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-page="features">Features</a></li>
+                    <li><a href="#" class="nav-link" data-page="how-it-works">How It Works</a></li>
+                    <li><a href="#" class="nav-link" data-page="community">Community Board</a></li>
+                    <li><a href="#" class="nav-link" data-page="volunteers">Volunteers</a></li>
+                    <li><a href="#" class="nav-link" data-page="maps">Maps & Hospitals</a></li>
+                    <li><a href="#" class="nav-link" data-page="symptom-checker">Symptom Checker</a></li>
+                    <li><a href="#" class="nav-link" data-page="contact">Contact/Download</a></li>
+                </ul>
+            </nav>
+            
+            <div class="language-toggle">
+                <button class="lang-btn active">English</button>
+                <button class="lang-btn">हिंदी</button>
+            </div>
+            
+            <button class="mobile-menu-btn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <!-- Home Page -->
+        <section id="home" class="page active">
+            <div class="hero">
+                <h1>Emergency Help for Rural India</h1>
+                <p>Rural Emergency Assist is a lifesaving mobile app designed specifically for villages in India, providing quick support during medical or safety emergencies even with low network connectivity.</p>
+                <a href="#" class="cta-button">Download Now <i class="fas fa-download"></i></a>
+            </div>
+
+            <div class="section">
+                <h2>Our Mission</h2>
+                <p>To empower rural communities with immediate access to emergency assistance, medical guidance, and local support networks through innovative technology that works even with limited connectivity.</p>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-wifi"></i>
+                        <h3>Works Offline</h3>
+                        <p>Critical features available without internet connection</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-first-aid"></i>
+                        <h3>First Aid Guides</h3>
+                        <p>Voice-based instructions for common emergencies</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-bell"></i>
+                        <h3>One-Tap SOS</h3>
+                        <p>Send location via SMS or Bluetooth when internet is weak</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Page -->
+        <section id="features" class="page">
+            <div class="section">
+                <h2>App Features</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-volume-up"></i>
+                        <h3>Offline Voice Guides</h3>
+                        <p>Step-by-step first aid instructions for snake bites, burns, heart attacks, fractures, and more in Hindi and local languages.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-broadcast-tower"></i>
+                        <h3>Bluetooth SOS</h3>
+                        <p>Send emergency alerts via Bluetooth mesh network when cellular signal is weak.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-user-md"></i>
+                        <h3>Connect to Helpers</h3>
+                        <p>Directly contact nearby village volunteers, ASHA workers, and the closest healthcare centers.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h3>Offline Maps</h3>
+                        <p>Access maps and hospital lists without internet connection.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-robot"></i>
+                        <h3>AI Symptom Checker</h3>
+                        <p>Analyze symptoms and provide step-by-step guidance until help arrives.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-female"></i>
+                        <h3>Voice Assistant</h3>
+                        <p>Friendly female voice interface in Hindi and local languages for hands-free operation.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Page -->
+        <section id="how-it-works" class="page">
+            <div class="section">
+                <h2>How It Works</h2>
+                
+                <div class="steps">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div>
+                            <h3>Download & Setup</h3>
+                            <p>Install the app and complete the simple setup process. The app works immediately, even offline.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div>
+                            <h3>Emergency Situation</h3>
+                            <p>In case of emergency, open the app or use the voice command to activate assistance.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div>
+                            <h3>Get Immediate Help</h3>
+                            <p>Use one-tap SOS, access first-aid guides, or connect with nearby volunteers and healthcare providers.</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">4</div>
+                        <div>
+                            <h3>Follow Guidance</h3>
+                            <p>The AI assistant provides step-by-step instructions while help is on the way.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Emergency Scenarios</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-stethoscope"></i>
+                        <h3>Medical Emergency</h3>
+                        <p>Heart attack, snake bite, burns, fractures - get immediate first aid guidance.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-shield-alt"></i>
+                        <h3>Safety Threat</h3>
+                        <p>Send SOS alerts to nearby volunteers and family members with your location.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-tint"></i>
+                        <h3>Blood Requirement</h3>
+                        <p>Quickly find blood donors in your community through the community board.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Community Board Page -->
+        <section id="community" class="page">
+            <div class="section">
+                <h2>Community Help Board</h2>
+                <p>Connect with your community for urgent needs like blood, medicines, or emergency alerts.</p>
+                
+                <div class="help-requests">
+                    <div class="request-card">
+                        <span class="request-type blood">BLOOD NEEDED</span>
+                        <h3>O+ Blood Required</h3>
+                        <p>For: 45-year-old female, accident victim</p>
+                        <p>Location: Village Health Center</p>
+                        <p>Contact: 98765XXXXX</p>
+                        <p>Posted: 2 hours ago</p>
+                    </div>
+                    <div class="request-card">
+                        <span class="request-type medicine">MEDICINES</span>
+                        <h3>Insulin Required</h3>
+                        <p>Type: Human Insulin</p>
+                        <p>Location: Next to Panchayat Office</p>
+                        <p>Contact: 97654XXXXX</p>
+                        <p>Posted: 5 hours ago</p>
+                    </div>
+                    <div class="request-card">
+                        <span class="request-type fire">FIRE ALERT</span>
+                        <h3>Field Fire Near River</h3>
+                        <p>Location: Western fields</p>
+                        <p>Volunteers needed with water containers</p>
+                        <p>Contact: Emergency Services</p>
+                        <p>Posted: 30 minutes ago</p>
+                    </div>
+                    <div class="request-card">
+                        <span class="request-type blood">BLOOD DONOR</span>
+                        <h3>Available to Donate</h3>
+                        <p>Blood Type: B+</p>
+                        <p>Location: Available within 10km</p>
+                        <p>Contact: 96543XXXXX</p>
+                        <p>Posted: 1 day ago</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Volunteers Page -->
+        <section id="volunteers" class="page">
+            <div class="section">
+                <h2>Connect with Helpers</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-hands-helping"></i>
+                        <h3>Village Volunteers</h3>
+                        <p>Trained community members ready to assist during emergencies.</p>
+                        <p><strong>How to connect:</strong> Use the app to find nearby volunteers and send assistance requests.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-user-nurse"></i>
+                        <h3>ASHA Workers</h3>
+                        <p>Accredited Social Health Activists providing basic healthcare support.</p>
+                        <p><strong>How to connect:</strong> Direct messaging and location-based matching in the app.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-ambulance"></i>
+                        <h3>Ambulance Services</h3>
+                        <p>Quick access to the nearest available ambulance with estimated arrival time.</p>
+                        <p><strong>How to connect:</strong> One-tap ambulance request with automatic location sharing.</p>
+                    </div>
+                </div>
+                
+                <h3>Become a Volunteer</h3>
+                <p>Join our network of community helpers and make a difference in emergencies. Training provided.</p>
+                <a href="#" class="cta-button">Register as Volunteer</a>
+            </div>
+        </section>
+
+        <!-- Maps & Hospitals Page -->
+        <section id="maps" class="page">
+            <div class="section">
+                <h2>Offline Maps & Hospitals</h2>
+                
+                <div class="map-container">
+                    [Interactive Map Would Appear Here]
+                    <p>Offline Map View - Primary Health Centers Highlighted</p>
+                </div>
+                
+                <h3>Nearby Healthcare Facilities</h3>
+                <div class="hospital-list">
+                    <div class="hospital-item">
+                        <div>
+                            <h4>Primary Health Center (PHC)</h4>
+                            <p>Village Main Road, 5km away</p>
+                            <p>Services: Basic emergency care, vaccinations, maternal health</p>
+                        </div>
+                        <div class="distance">5km</div>
+                    </div>
+                    <div class="hospital-item">
+                        <div>
+                            <h4>Community Health Center (CHC)</h4>
+                            <p>Block Headquarters, 12km away</p>
+                            <p>Services: Emergency care, minor surgeries, laboratory tests</p>
+                        </div>
+                        <div class="distance">12km</div>
+                    </div>
+                    <div class="hospital-item">
+                        <div>
+                            <h4>District Hospital</h4>
+                            <p>District Town, 25km away</p>
+                            <p>Services: Comprehensive emergency care, specialists, surgery</p>
+                        </div>
+                        <div class="distance">25km</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Symptom Checker Page -->
+        <section id="symptom-checker" class="page">
+            <div class="section">
+                <h2>AI Symptom Checker</h2>
+                <p>Describe your symptoms and get AI-powered guidance on next steps.</p>
+                
+                <div class="symptom-checker">
+                    <div class="chat-container" id="chat-container">
+                        <div class="message bot-message">
+                            <p>Namaste! I'm your health assistant. Please describe your symptoms or emergency situation.</p>
+                        </div>
+                        <div class="message user-message">
+                            <p>My father is having chest pain and difficulty breathing.</p>
+                        </div>
+                        <div class="message bot-message">
+                            <p>This could be a serious condition. Please have him sit down and rest immediately. I'm connecting you to nearby emergency services. Meanwhile, can you tell me more about his symptoms? Does the pain radiate to his arm or jaw?</p>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group">
+                        <input type="text" id="user-input" placeholder="Type your symptoms here...">
+                        <button id="send-btn"><i class="fas fa-paper-plane"></i></button>
+                    </div>
+                </div>
+                
+                <h3>How the AI Assistant Helps</h3>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <i class="fas fa-diagnoses"></i>
+                        <h3>Symptom Analysis</h3>
+                        <p>AI analyzes described symptoms to identify potential conditions.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-list-ol"></i>
+                        <h3>Step-by-Step Guidance</h3>
+                        <p>Provides clear instructions while waiting for professional help.</p>
+                    </div>
+                    <div class="feature-card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Emergency Connection</h3>
+                        <p>Automatically connects to nearest appropriate healthcare facility.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact/Download Page -->
+        <section id="contact" class="page">
+            <div class="section">
+                <h2>Download the App</h2>
+                <p>Get Rural Emergency Assist on your smartphone today. The app is free and designed to work on all devices, even with limited storage.</p>
+                
+                <div class="download-buttons">
+                    <a href="#" class="download-btn">
+                        <i class="fab fa-google-play"></i>
+                        <div>
+                            <small>GET IT ON</small>
+                            <div>Google Play</div>
+                        </div>
+                    </a>
+                    <a href="#" class="download-btn">
+                        <i class="fab fa-apple"></i>
+                        <div>
+                            <small>Download on the</small>
+                            <div>App Store</div>
+                        </div>
+                    </a>
+                </div>
+                
+                <h3>Contact Us</h3>
+                <p>Have questions or feedback? We'd love to hear from you.</p>
+                
+                <form class="contact-form">
+                    <div class="form-group">
+                        <label for="name">Full Name</label>
+                        <input type="text" id="name" placeholder="Enter your name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email Address</label>
+                        <input type="email" id="email" placeholder="Enter your email">
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" placeholder="Enter your phone number">
+                    </div>
+                    <div class="form-group">
+                        <label for="village">Village/Town</label>
+                        <input type="text" id="village" placeholder="Enter your village name">
+                    </div>
+                    <div class="form-group full-width">
+                        <label for="message">Message</label>
+                        <textarea id="message" placeholder="How can we help you?"></textarea>
+                    </div>
+                    <div class="form-group full-width">
+                        <button type="submit" class="cta-button">Send Message</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-container">
+            <div class="footer-section">
+                <h3>Rural Emergency Assist</h3>
+                <p>Lifesaving technology for rural communities in India.</p>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Home</a></li>
+                    <li><a href="#">Features</a></li>
+                    <li><a href="#">How It Works</a></li>
+                    <li><a href="#">Download</a></li>
+                    <li><a href="#">Volunteer</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Support</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Help Center</a></li>
+                    <li><a href="#">Contact Us</a></li>
+                    <li><a href="#">Privacy Policy</a></li>
+                    <li><a href="#">Terms of Service</a></li>
+                    <li><a href="#">Community Guidelines</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h3>Partners</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Ministry of Health</a></li>
+                    <li><a href="#">ASHA Workers Network</a></li>
+                    <li><a href="#">NGO Partners</a></li>
+                    <li><a href="#">Corporate Sponsors</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="copyright">
+            <p>&copy; 2023 Rural Emergency Assist. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Page Navigation
+        document.addEventListener('DOMContentLoaded', function() {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const pages = document.querySelectorAll('.page');
+            
+            navLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Remove active class from all links and pages
+                    navLinks.forEach(l => l.classList.remove('active'));
+                    pages.forEach(p => p.classList.remove('active'));
+                    
+                    // Add active class to clicked link
+                    this.classList.add('active');
+                    
+                    // Show corresponding page
+                    const pageId = this.getAttribute('data-page');
+                    document.getElementById(pageId).classList.add('active');
+                    
+                    // Scroll to top
+                    window.scrollTo(0, 0);
+                });
+            });
+            
+            // Mobile menu toggle
+            const mobileMenuBtn = document.querySelector('.mobile-menu-btn');
+            const nav = document.querySelector('nav');
+            
+            mobileMenuBtn.addEventListener('click', function() {
+                nav.classList.toggle('show');
+            });
+            
+            // Language toggle
+            const langButtons = document.querySelectorAll('.lang-btn');
+            
+            langButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    langButtons.forEach(btn => btn.classList.remove('active'));
+                    this.classList.add('active');
+                    // In a real app, this would change the language of the content
+                });
+            });
+            
+            // Symptom checker demo
+            const sendBtn = document.getElementById('send-btn');
+            const userInput = document.getElementById('user-input');
+            const chatContainer = document.getElementById('chat-container');
+            
+            sendBtn.addEventListener('click', function() {
+                const message = userInput.value.trim();
+                if (message) {
+                    // Add user message
+                    const userMessage = document.createElement('div');
+                    userMessage.className = 'message user-message';
+                    userMessage.innerHTML = `<p>${message}</p>`;
+                    chatContainer.appendChild(userMessage);
+                    
+                    // Clear input
+                    userInput.value = '';
+                    
+                    // Simulate bot response after a delay
+                    setTimeout(() => {
+                        const botMessage = document.createElement('div');
+                        botMessage.className = 'message bot-message';
+                        botMessage.innerHTML = `<p>Thank you for that information. Based on your description, I recommend ${getRandomResponse()}</p>`;
+                        chatContainer.appendChild(botMessage);
+                        chatContainer.scrollTop = chatContainer.scrollHeight;
+                    }, 1000);
+                    
+                    chatContainer.scrollTop = chatContainer.scrollHeight;
+                }
+            });
+            
+            // Allow sending message with Enter key
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendBtn.click();
+                }
+            });
+            
+            function getRandomResponse() {
+                const responses = [
+                    "keeping the person calm and in a comfortable position while I alert nearby medical services.",
+                    "applying basic first aid measures. I've notified the closest healthcare provider about your situation.",
+                    "monitoring vital signs until professional help arrives. I'm connecting you with a nearby volunteer.",
+                    "following emergency protocols for this type of situation. Help is being dispatched to your location."
+                ];
+                return responses[Math.floor(Math.random() * responses.length)];
+            }
+        });
+    </script>
+</body>
+</html>
